@@ -1,0 +1,210 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --abyss: #071B2E;
+    --channel: #0F3B63;
+    --signal: #1868B8;
+    --foam: #EFF4F8;
+    --white: #FFFFFF;
+    --steel: #7E92A6;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  body {
+    background-color: var(--abyss);
+    color: var(--foam);
+    font-family: 'IBM Plex Sans', sans-serif;
+    overflow-x: hidden;
+    overflow-y: auto;
+    user-select: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Custom Typography Utilities */
+.font-display {
+  font-family: 'Zilla Slab', Georgia, serif;
+}
+
+.font-mono {
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 0.1em;
+}
+
+.font-sans {
+  font-family: 'IBM Plex Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.font-stamp {
+  font-family: 'Oswald', sans-serif;
+}
+
+/* Artistic Flair Theme Accents & Layout Elements */
+.accent-line {
+  height: 1px;
+  background: linear-gradient(90deg, rgba(24, 104, 184, 0.6) 0%, rgba(255, 255, 255, 0.15) 100%);
+  width: 100%;
+}
+
+.circle-btn {
+  width: 88px;
+  height: 88px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(12px);
+  background: rgba(15, 59, 99, 0.3);
+}
+
+.circle-btn:hover {
+  border-color: #1868B8;
+  background: rgba(24, 104, 184, 0.25);
+  box-shadow: 0 0 25px rgba(24, 104, 184, 0.4);
+  transform: scale(1.05);
+}
+
+.vertical-text {
+  writing-mode: vertical-rl;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.meta-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #7E92A6;
+  font-weight: 600;
+}
+
+/* Liquid Refractive Glass - Technical Spec */
+.glass-panel {
+  background: rgba(15, 59, 99, 0.45);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.08),
+    0 12px 40px rgba(7, 27, 46, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-nav {
+  background: rgba(7, 27, 46, 0.72);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 8px 32px rgba(7, 27, 46, 0.5);
+}
+
+.glass-button {
+  background: linear-gradient(135deg, rgba(24, 104, 184, 0.75) 0%, rgba(15, 59, 99, 0.6) 100%);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 4px 20px rgba(24, 104, 184, 0.35);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-button:hover {
+  background: linear-gradient(135deg, rgba(24, 104, 184, 0.95) 0%, rgba(15, 59, 99, 0.8) 100%);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 8px 28px rgba(24, 104, 184, 0.5);
+  transform: translateY(-1px);
+}
+
+.glass-card {
+  background: rgba(7, 27, 46, 0.6);
+  backdrop-filter: blur(16px) saturate(130%);
+  -webkit-backdrop-filter: blur(16px) saturate(130%);
+  border: 1px solid rgba(126, 146, 166, 0.25);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 10px 30px rgba(7, 27, 46, 0.3);
+}
+
+/* Fallback for browsers without backdrop-filter support */
+@supports not (backdrop-filter: blur(1px)) {
+  .glass-panel, .glass-nav, .glass-button, .glass-card {
+    background: rgba(15, 59, 99, 0.92) !important;
+  }
+}
+
+/* Page curl 3D specular highlight and fold styling */
+.page-curl-fold-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, 
+    rgba(255, 255, 255, 0.8) 0%, 
+    rgba(255, 255, 255, 0.95) 50%, 
+    rgba(255, 255, 255, 0.8) 100%);
+  box-shadow: 
+    0 0 12px rgba(255, 255, 255, 0.9),
+    0 0 24px rgba(24, 104, 184, 0.6);
+  z-index: 999;
+  pointer-events: none;
+}
+
+/* Custom scrollbar reset */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--abyss);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--channel);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--signal);
+}
+
+/* Liquid refraction filter effect helper */
+.filter-refract {
+  filter: url(#liquid-refraction);
+}
+
+/* Animation keyframes for page fold specular highlight swipe */
+@keyframes foldSpecularSweep {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+.animate-fold-specular {
+  animation: foldSpecularSweep 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
