@@ -49,10 +49,15 @@ export const Page04RopeAccess: React.FC = () => {
             <div className="flex-1 flex flex-col justify-between py-1">
               <div>
                 <p className="font-sans text-xs md:text-sm text-[#071B2E]/90 leading-relaxed">
-                  A <strong>Abyby Sita Comércio Geral, LDA</strong> atua na área de soluções técnicas e serviços especializados, oferecendo <strong>Rope Access (Acesso por Cordas)</strong> como uma técnica moderna, segura e altamente eficiente para trabalhos em altura e locais de difícil acesso.
+                  A <strong>Abyby Sita Comércio Geral, LDA</strong> atua na área de soluções
+                  técnicas e serviços especializados, oferecendo{' '}
+                  <strong>Rope Access (Acesso por Cordas)</strong> como uma técnica moderna, segura
+                  e altamente eficiente para trabalhos em altura e locais de difícil acesso.
                 </p>
                 <p className="font-sans text-xs md:text-sm text-[#071B2E]/90 leading-relaxed mt-2">
-                  O Rope Access utiliza equipamentos certificados, como cordas de alta resistência, arnês e sistemas de segurança avançados, permitindo a execução de inspeções e reparações com máxima precisão e eliminação total de andaimes pesados.
+                  O Rope Access utiliza equipamentos certificados, como cordas de alta resistência,
+                  arnês e sistemas de segurança avançados, permitindo a execução de inspeções e
+                  reparações com máxima precisão e eliminação total de andaimes pesados.
                 </p>
               </div>
 
@@ -90,12 +95,36 @@ export const Page04RopeAccess: React.FC = () => {
           </div>
           <div className="grid grid-cols-3 gap-2">
             {[
-              { label: 'Inspeção NDT', code: 'IMG_01', url: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80' },
-              { label: 'Plataforma Offshore', code: 'IMG_02', url: 'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?auto=format&fit=crop&w=600&q=80' },
-              { label: 'Pintura Industrial', code: 'IMG_03', url: 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=600&q=80' },
-              { label: 'Manutenção Tocha', code: 'IMG_04', url: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80' },
-              { label: 'Rope Rigging', code: 'IMG_05', url: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=600&q=80' },
-              { label: 'Inspeção Estrutura', code: 'IMG_06', url: 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=600&q=80' },
+              {
+                label: 'Inspeção NDT',
+                code: 'IMG_01',
+                url: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80',
+              },
+              {
+                label: 'Plataforma Offshore',
+                code: 'IMG_02',
+                url: 'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?auto=format&fit=crop&w=600&q=80',
+              },
+              {
+                label: 'Pintura Industrial',
+                code: 'IMG_03',
+                url: 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=600&q=80',
+              },
+              {
+                label: 'Manutenção Tocha',
+                code: 'IMG_04',
+                url: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80',
+              },
+              {
+                label: 'Rope Rigging',
+                code: 'IMG_05',
+                url: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=600&q=80',
+              },
+              {
+                label: 'Inspeção Estrutura',
+                code: 'IMG_06',
+                url: 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=600&q=80',
+              },
             ].map((img, idx) => (
               <div
                 key={idx}
@@ -108,7 +137,9 @@ export const Page04RopeAccess: React.FC = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#071B2E] via-[#071B2E]/40 to-transparent opacity-90 group-hover:opacity-70 transition-opacity pointer-events-none" />
                 <div className="relative z-10">
-                  <span className="font-mono text-[9px] text-[#1868B8] bg-[#071B2E]/80 px-1 rounded inline-block font-bold">{img.code}</span>
+                  <span className="font-mono text-[9px] text-[#1868B8] bg-[#071B2E]/80 px-1 rounded inline-block font-bold">
+                    {img.code}
+                  </span>
                   <span className="font-sans font-bold text-[10px] text-white leading-tight block mt-0.5">
                     {img.label}
                   </span>

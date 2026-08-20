@@ -63,7 +63,10 @@ export const OceanCanvas: React.FC = () => {
         ctx.moveTo(0, yOffset);
 
         for (let x = 0; x <= width; x += 20) {
-          const y = Math.sin(x * 0.003 + waveStep + wave) * 20 + Math.cos(x * 0.001 - waveStep) * 15 + yOffset;
+          const y =
+            Math.sin(x * 0.003 + waveStep + wave) * 20 +
+            Math.cos(x * 0.001 - waveStep) * 15 +
+            yOffset;
           ctx.lineTo(x, y);
         }
 
@@ -98,18 +101,20 @@ export const OceanCanvas: React.FC = () => {
         }
       }
 
-        if (!prefersReducedMotion) {
-          animationFrameId = requestAnimationFrame(render);
-        }
-      };
+      if (!prefersReducedMotion) {
+        animationFrameId = requestAnimationFrame(render);
+      }
+    };
 
-      render();
+    render();
 
-      return () => {
-        window.removeEventListener('resize', handleResize);
-        if (animationFrameId) cancelAnimationFrame(animationFrameId);
-      };
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+    };
   }, []);
 
-  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-0" />;
+  return (
+    <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-0" />
+  );
 };

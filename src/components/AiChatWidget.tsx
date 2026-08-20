@@ -1,5 +1,17 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Sparkles, MessageSquare, X, Send, Bot, User, RefreshCw, ChevronDown, MapPin, Phone, ExternalLink } from 'lucide-react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import {
+  X,
+  Send,
+  MessageCircle,
+  User,
+  RefreshCw,
+  ChevronDown,
+  MapPin,
+  Phone,
+  ExternalLink,
+  Headphones,
+} from 'lucide-react';
+import { COMPANY } from '../lib/company';
 
 interface Message {
   id: string;
@@ -18,7 +30,8 @@ export const AiChatWidget: React.FC<AiChatWidgetProps> = ({ onNavigate }) => {
     {
       id: 'welcome-1',
       role: 'assistant',
-      content: 'Olá! Sou a Assistente Virtual com Inteligência Artificial da **Abyby Sita Comércio Geral, LDA**.\n\nComo posso ajudá-lo hoje com as nossas soluções de logística, operações marítimas, apoio offshore ou materiais industriais em Angola?',
+      content:
+        'Bem-vindo ao **Apoio ao Cliente da Abyby Sita**.\n\nComo podemos ajudá-lo? Estamos disponíveis para questões sobre logística, operações marítimas, apoio offshore, materiais industriais e cotações comerciais.',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     },
   ]);
@@ -43,17 +56,41 @@ export const AiChatWidget: React.FC<AiChatWidgetProps> = ({ onNavigate }) => {
     }
   }, [messages, isOpen, isLoading]);
 
+  // Close chat on Escape key
+  const handleEscapeKey = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        setIsOpen(false);
+      }
+    },
+    [isOpen],
+  );
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleEscapeKey);
+    return () => document.removeEventListener('keydown', handleEscapeKey);
+  }, [handleEscapeKey]);
+
   const handleSendMessage = async (textToSend?: string) => {
     const text = (textToSend || inputMessage).trim();
     if (!text || isLoading) return;
 
     if (text.length > 1000) {
-      alert('A sua mensagem é demasiado longa (máximo 1000 caracteres).');
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: crypto.randomUUID(),
+          role: 'assistant',
+          content:
+            'A sua mensagem é demasiado longa (máximo 1000 caracteres). Por favor, reduza o texto e tente novamente.',
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        },
+      ]);
       return;
     }
 
     const userMsg: Message = {
-      id: Date.now().toString(),
+      id: crypto.randomUUID(),
       role: 'user',
       content: text,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
@@ -63,13 +100,19 @@ export const AiChatWidget: React.FC<AiChatWidgetProps> = ({ onNavigate }) => {
     if (!textToSend) setInputMessage('');
     setIsLoading(true);
 
-    // Format chat history for API endpoint
+    // Format chat history for API endpoint — only the last 10 turns, so the
+    // request body stays small and doesn't exceed the server body limit.
     const history = messages
-      .filter((m) => m.id !== 'welcome-1')
+      .filter((m) => !m.id.startsWith('welcome'))
+      .slice(-10)
       .map((m) => ({
         role: m.role,
         content: m.content,
       }));
+
+    const controller = new AbortController();
+    // DeepSeek via NVIDIA can take ~30s+ to respond — give it 60s before aborting.
+    const timeoutId = setTimeout(() => controller.abort(), 60000);
 
     try {
       const response = await fetch('/api/chat', {
@@ -81,13 +124,15 @@ export const AiChatWidget: React.FC<AiChatWidgetProps> = ({ onNavigate }) => {
           message: text,
           history,
         }),
+        signal: controller.signal,
       });
+      clearTimeout(timeoutId);
 
       const data = await response.json();
 
       if (response.ok && data.reply) {
         const assistantMsg: Message = {
-          id: (Date.now() + 1).toString(),
+          id: crypto.randomUUID(),
           role: 'assistant',
           content: data.reply,
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
@@ -96,12 +141,19 @@ export const AiChatWidget: React.FC<AiChatWidgetProps> = ({ onNavigate }) => {
       } else {
         throw new Error(data.error || 'Erro na resposta');
       }
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Erro ao enviar mensagem para a IA:', error);
+      let errorMessageContent = `Lamento, ocorreu uma pequena oscilação na ligação. Pode ligar para o **${COMPANY.phones.primary}** ou enviar email para **${COMPANY.email}**.`;
+
+      if (error instanceof Error && error.name === 'AbortError') {
+        errorMessageContent =
+          'O pedido demorou demasiado tempo a responder. Por favor, tente novamente.';
+      }
+
       const errorMsg: Message = {
-        id: (Date.now() + 1).toString(),
+        id: crypto.randomUUID(),
         role: 'assistant',
-        content: 'Lamento, ocorreu uma pequena oscilação na ligação. Pode ligar para o **+244 935 403 327** ou enviar email para **info.geral@abybysita.com**.',
+        content: errorMessageContent,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
       setMessages((prev) => [...prev, errorMsg]);
@@ -149,26 +201,25 @@ export const AiChatWidget: React.FC<AiChatWidgetProps> = ({ onNavigate }) => {
       {/* Floating Trigger Button */}
       <div className="fixed bottom-5 right-5 z-50 flex items-center gap-3">
         {!isOpen && (
-          <div className="hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#071B2E]/90 backdrop-blur-md border border-cyan-400/40 text-cyan-200 font-mono text-xs shadow-xl animate-bounce-slow">
-            <Sparkles className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-            <span>Assistente IA Abyby Sita</span>
+          <div className="hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#071B2E]/90 backdrop-blur-md border border-[#1868B8]/40 text-slate-200 font-mono text-xs shadow-xl">
+            <Headphones className="w-3.5 h-3.5 text-[#1868B8]" />
+            <span>Apoio ao Cliente</span>
           </div>
         )}
 
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`p-4 rounded-full bg-gradient-to-r from-[#1868B8] via-[#0F3B63] to-[#1868B8] text-white shadow-[0_8px_32px_rgba(24,104,184,0.6)] border border-cyan-300/50 hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer flex items-center justify-center relative group ${
+          className={`p-4 rounded-full bg-[#1868B8] text-white shadow-[0_4px_16px_rgba(24,104,184,0.4)] border border-[#1868B8]/60 hover:bg-[#1356A0] active:scale-95 transition-all duration-200 cursor-pointer flex items-center justify-center relative group ${
             isOpen ? 'rotate-90' : ''
           }`}
-          aria-label="Abrir Assistente com Inteligência Artificial"
+          aria-label="Abrir Apoio ao Cliente"
         >
           {isOpen ? (
-            <X className="w-6 h-6 text-cyan-200" />
+            <X className="w-6 h-6 text-white" />
           ) : (
             <>
-              <Bot className="w-6 h-6 text-cyan-200" />
-              <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-cyan-400 rounded-full border-2 border-[#071B2E] animate-ping" />
-              <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-cyan-400 rounded-full border-2 border-[#071B2E]" />
+              <MessageCircle className="w-6 h-6 text-white" />
+              <span className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full border-2 border-white" />
             </>
           )}
         </button>
@@ -176,25 +227,27 @@ export const AiChatWidget: React.FC<AiChatWidgetProps> = ({ onNavigate }) => {
 
       {/* Floating Chat Modal */}
       {isOpen && (
-        <div className="fixed bottom-22 right-3 sm:right-6 z-50 w-[calc(100vw-24px)] sm:w-[430px] h-[560px] max-h-[82vh] rounded-2xl bg-[#030F1C]/95 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_20px_70px_rgba(0,0,0,0.85)] flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-5 duration-300">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Chat com Apoio ao Cliente da Abyby Sita"
+          className="fixed bottom-22 right-3 sm:right-6 z-50 w-[calc(100vw-24px)] sm:w-[430px] h-[560px] max-h-[82vh] rounded-2xl bg-[#030F1C]/95 backdrop-blur-2xl border border-[#1868B8]/30 shadow-[0_20px_70px_rgba(0,0,0,0.85)] flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-5 duration-300"
+        >
           {/* Header */}
           <div className="px-5 py-3.5 bg-gradient-to-r from-[#071B2E] via-[#0B2A4A] to-[#071B2E] border-b border-white/10 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="relative p-2 rounded-xl bg-[#1868B8]/30 border border-cyan-400/40">
-                <Bot className="w-5 h-5 text-cyan-300" />
+              <div className="relative p-2 rounded-xl bg-[#1868B8]/20 border border-[#1868B8]/40">
+                <Headphones className="w-5 h-5 text-[#1868B8]" />
                 <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-400 rounded-full border border-[#071B2E]" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
                   <h3 className="font-display font-bold text-sm text-white tracking-wide">
-                    Assistente Abyby Sita
+                    Apoio ao Cliente
                   </h3>
-                  <span className="px-2 py-0.5 rounded-full bg-cyan-500/20 border border-cyan-400/30 text-[10px] font-mono text-cyan-300 font-semibold">
-                    IA
-                  </span>
                 </div>
                 <p className="font-sans text-[11px] text-slate-300 flex items-center gap-1">
-                  <span>Atendimento & Informação 24/7</span>
+                  <span>Atendimento Comercial & Técnico</span>
                 </p>
               </div>
             </div>
@@ -225,7 +278,7 @@ export const AiChatWidget: React.FC<AiChatWidgetProps> = ({ onNavigate }) => {
             </div>
             <div className="flex items-center gap-1 text-slate-300">
               <Phone className="w-3 h-3 text-cyan-400" />
-              <span>+244 935 403 327</span>
+              <span>{COMPANY.phones.primary}</span>
             </div>
           </div>
 
@@ -237,8 +290,8 @@ export const AiChatWidget: React.FC<AiChatWidgetProps> = ({ onNavigate }) => {
                 className={`flex gap-2.5 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 {msg.role === 'assistant' && (
-                  <div className="w-7 h-7 rounded-lg bg-[#1868B8]/40 border border-cyan-400/40 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <Bot className="w-4 h-4 text-cyan-300" />
+                  <div className="w-7 h-7 rounded-lg bg-[#1868B8]/20 border border-[#1868B8]/30 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Headphones className="w-4 h-4 text-[#1868B8]" />
                   </div>
                 )}
 
@@ -270,15 +323,15 @@ export const AiChatWidget: React.FC<AiChatWidgetProps> = ({ onNavigate }) => {
             {/* Loading / Typing Indicator */}
             {isLoading && (
               <div className="flex gap-2.5 justify-start items-center">
-                <div className="w-7 h-7 rounded-lg bg-[#1868B8]/40 border border-cyan-400/40 flex items-center justify-center flex-shrink-0">
-                  <Bot className="w-4 h-4 text-cyan-300 animate-pulse" />
+                <div className="w-7 h-7 rounded-lg bg-[#1868B8]/20 border border-[#1868B8]/30 flex items-center justify-center flex-shrink-0">
+                  <Headphones className="w-4 h-4 text-[#1868B8] animate-pulse" />
                 </div>
                 <div className="rounded-2xl p-3 bg-slate-900/90 border border-white/10 text-xs text-slate-300 flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-bounce" />
-                  <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-bounce delay-150" />
-                  <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-bounce delay-300" />
-                  <span className="ml-2 font-mono text-[10px] text-cyan-300/80">
-                    A analisar informações...
+                  <span className="w-1.5 h-1.5 bg-[#1868B8] rounded-full animate-bounce" />
+                  <span className="w-1.5 h-1.5 bg-[#1868B8] rounded-full animate-bounce delay-150" />
+                  <span className="w-1.5 h-1.5 bg-[#1868B8] rounded-full animate-bounce delay-300" />
+                  <span className="ml-2 font-mono text-[10px] text-slate-400">
+                    A processar...
                   </span>
                 </div>
               </div>
@@ -319,7 +372,7 @@ export const AiChatWidget: React.FC<AiChatWidgetProps> = ({ onNavigate }) => {
                 </button>
                 <button
                   onClick={() => {
-                    onNavigate(11); // Contacts / Proposal page
+                    onNavigate(3); // Contacts / Proposal page
                     setIsOpen(false);
                   }}
                   className="hover:text-cyan-300 flex items-center gap-1 transition-colors cursor-pointer"

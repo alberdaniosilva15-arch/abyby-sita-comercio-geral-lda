@@ -30,7 +30,9 @@ export const Page11WhyChooseUs: React.FC = () => {
             <CheckCircle2 className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
             <div>
               <h3 className="font-sans font-bold text-sm text-white">Empresa 100% Angolana</h3>
-              <p className="font-sans text-xs text-slate-300">Domínio profundo do mercado local e regulação nacional.</p>
+              <p className="font-sans text-xs text-slate-300">
+                Domínio profundo do mercado local e regulação nacional.
+              </p>
             </div>
           </div>
 
@@ -38,7 +40,9 @@ export const Page11WhyChooseUs: React.FC = () => {
             <CheckCircle2 className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
             <div>
               <h3 className="font-sans font-bold text-sm text-white">Experiência Multisetorial</h3>
-              <p className="font-sans text-xs text-slate-300">Atuação comprovada em Oil & Gas, Construção e Mineração.</p>
+              <p className="font-sans text-xs text-slate-300">
+                Atuação comprovada em Oil & Gas, Construção e Mineração.
+              </p>
             </div>
           </div>
 
@@ -46,15 +50,21 @@ export const Page11WhyChooseUs: React.FC = () => {
             <CheckCircle2 className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
             <div>
               <h3 className="font-sans font-bold text-sm text-white">Soluções Integradas</h3>
-              <p className="font-sans text-xs text-slate-300">Venda, Aluguer, Manutenção e Suporte Técnico num único parceiro.</p>
+              <p className="font-sans text-xs text-slate-300">
+                Venda, Aluguer, Manutenção e Suporte Técnico num único parceiro.
+              </p>
             </div>
           </div>
 
           <div className="p-4 rounded-xl bg-[#0F3B63]/40 backdrop-blur-md border border-[#7E92A6]/30 shadow-md flex items-start gap-3">
             <ShieldCheck className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
             <div>
-              <h3 className="font-sans font-bold text-sm text-white">Compromisso com a Qualidade</h3>
-              <p className="font-sans text-xs text-slate-300">Equipamentos inspecionados e rigor nos prazos operacionais.</p>
+              <h3 className="font-sans font-bold text-sm text-white">
+                Compromisso com a Qualidade
+              </h3>
+              <p className="font-sans text-xs text-slate-300">
+                Equipamentos inspecionados e rigor nos prazos operacionais.
+              </p>
             </div>
           </div>
         </div>

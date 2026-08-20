@@ -23,13 +23,18 @@ export const Page10BlueEnergy: React.FC = () => {
           {/* Official Partner Badge */}
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#2D9C4A]/10 border border-[#2D9C4A]">
             <Award className="w-4 h-4 text-[#2D9C4A]" />
-            <span className="font-mono text-xs text-[#2D9C4A] font-bold">Parceiro Oficial Angola</span>
+            <span className="font-mono text-xs text-[#2D9C4A] font-bold">
+              Parceiro Oficial Angola
+            </span>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center mt-3">
           <p className="md:col-span-8 font-sans text-xs md:text-sm text-slate-700 leading-relaxed">
-            Em parceria com a <strong>Blue Energy, LDA</strong> — distribuidora oficial da <strong>Simple Green®</strong> para Angola e África — a <strong>Abyby Sita Comércio Geral, LDA</strong> amplia a sua oferta com soluções de limpeza industrial sustentável de alto rendimento.
+            Em parceria com a <strong>Blue Energy, LDA</strong> — distribuidora oficial da{' '}
+            <strong>Simple Green®</strong> para Angola e África — a{' '}
+            <strong>Abyby Sita Comércio Geral, LDA</strong> amplia a sua oferta com soluções de
+            limpeza industrial sustentável de alto rendimento.
           </p>
           <div className="md:col-span-4 h-20 rounded-xl overflow-hidden border border-slate-200 relative group shadow-sm">
             <ImageWithLoader
@@ -55,7 +60,9 @@ export const Page10BlueEnergy: React.FC = () => {
               MISSÃO BLUE ENERGY
             </div>
             <p className="font-sans text-xs text-slate-600 leading-relaxed">
-              Ajudar empresas angolanas a otimizar o custo da limpeza através de soluções sustentáveis e de alto desempenho da Simple Green, elevando padrões de segurança e eficiência industrial.
+              Ajudar empresas angolanas a otimizar o custo da limpeza através de soluções
+              sustentáveis e de alto desempenho da Simple Green, elevando padrões de segurança e
+              eficiência industrial.
             </p>
           </div>
         </div>
@@ -68,7 +75,8 @@ export const Page10BlueEnergy: React.FC = () => {
               CONSULTORIA HSE
             </div>
             <p className="font-sans text-xs text-slate-600 leading-relaxed">
-              Diagnóstico técnico, avaliação do custo real, desenho de rotinas otimizadas e apoio técnico contínuo — transformando a limpeza industrial num investimento estratégico.
+              Diagnóstico técnico, avaliação do custo real, desenho de rotinas otimizadas e apoio
+              técnico contínuo — transformando a limpeza industrial num investimento estratégico.
             </p>
           </div>
         </div>
@@ -81,7 +89,8 @@ export const Page10BlueEnergy: React.FC = () => {
               FORMAÇÃO OPERACIONAL
             </div>
             <p className="font-sans text-xs text-slate-600 leading-relaxed">
-              Treinamentos práticos em segurança operacional e sustentabilidade aplicada para equipas de operação e manutenção nos estaleiros.
+              Treinamentos práticos em segurança operacional e sustentabilidade aplicada para
+              equipas de operação e manutenção nos estaleiros.
             </p>
           </div>
         </div>

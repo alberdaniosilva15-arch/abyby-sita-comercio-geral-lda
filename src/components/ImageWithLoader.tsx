@@ -6,7 +6,6 @@ interface ImageWithLoaderProps extends React.ImgHTMLAttributes<HTMLImageElement>
   alt: string;
   className?: string;
   imageClassName?: string;
-  overlayClassName?: string;
   showContourIcon?: boolean;
 }
 
@@ -15,7 +14,6 @@ export const ImageWithLoader: React.FC<ImageWithLoaderProps> = ({
   alt,
   className = '',
   imageClassName = '',
-  overlayClassName = '',
   showContourIcon = true,
   ...props
 }) => {

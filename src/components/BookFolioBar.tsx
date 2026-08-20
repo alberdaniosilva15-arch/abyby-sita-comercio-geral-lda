@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChevronUp, ChevronDown, Compass, Layers } from 'lucide-react';
+import { ChevronUp, ChevronDown, Layers } from 'lucide-react';
 
 interface BookFolioBarProps {
   currentPage: number;
@@ -26,7 +26,7 @@ export const BookFolioBar: React.FC<BookFolioBarProps> = ({
   return (
     <div className="fixed bottom-0 left-0 right-0 z-[500] h-14 bg-[#071B2E]/92 backdrop-blur-md border-t border-[#7E92A6]/25 px-4 md:px-8 flex items-center justify-between text-xs font-mono shadow-2xl">
       {/* Scroll Progress Line at Top */}
-      <div 
+      <div
         className="absolute top-0 left-0 h-[2px] bg-gradient-to-r from-[#1868B8] via-white to-[#1868B8] transition-all duration-300 shadow-[0_0_10px_#1868B8]"
         style={{ width: `${scrollProgressPercent}%` }}
       />
@@ -88,4 +88,3 @@ export const BookFolioBar: React.FC<BookFolioBarProps> = ({
     </div>
   );
 };
-

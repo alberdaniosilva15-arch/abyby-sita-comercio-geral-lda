@@ -32,32 +32,45 @@ export const Page09SepticService: React.FC = () => {
           </div>
 
           <p className="font-sans text-xs md:text-sm text-slate-700 leading-relaxed">
-            A <strong>Abyby Sita Comércio Geral, LDA</strong> presta serviços especializados de limpeza de fossas sépticas, garantindo soluções eficientes, seguras e ambientalmente responsáveis para clientes residenciais, comerciais, industriais e institucionais em Angola.
+            A <strong>Abyby Sita Comércio Geral, LDA</strong> presta serviços especializados de
+            limpeza de fossas sépticas, garantindo soluções eficientes, seguras e ambientalmente
+            responsáveis para clientes residenciais, comerciais, industriais e institucionais em
+            Angola.
           </p>
           <p className="font-sans text-xs md:text-sm text-slate-700 leading-relaxed mt-2">
-            Dispomos de equipamentos de sucção auto-vácuo de alta potência e de uma equipa qualificada para a remoção, transporte e descarte adequado de resíduos efluentes, prevenindo entupimentos, maus odores e contaminações.
+            Dispomos de equipamentos de sucção auto-vácuo de alta potência e de uma equipa
+            qualificada para a remoção, transporte e descarte adequado de resíduos efluentes,
+            prevenindo entupimentos, maus odores e contaminações.
           </p>
 
           {/* Badges Line */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mt-4 pt-4 border-t border-slate-200 text-left">
             <div className="flex items-center gap-2 p-2 rounded bg-[#F8FAFC] border border-slate-200">
               <Clock className="w-3.5 h-3.5 text-[#1868B8]" />
-              <span className="font-mono text-[11px] text-[#071B2E] font-medium">Atendimento Programado</span>
+              <span className="font-mono text-[11px] text-[#071B2E] font-medium">
+                Atendimento Programado
+              </span>
             </div>
 
             <div className="flex items-center gap-2 p-2 rounded bg-[#F8FAFC] border border-slate-200">
               <Clock className="w-3.5 h-3.5 text-[#1868B8]" />
-              <span className="font-mono text-[11px] text-[#071B2E] font-medium">Suporte de Emergência</span>
+              <span className="font-mono text-[11px] text-[#071B2E] font-medium">
+                Suporte de Emergência
+              </span>
             </div>
 
             <div className="flex items-center gap-2 p-2 rounded bg-[#F8FAFC] border border-slate-200">
               <Users className="w-3.5 h-3.5 text-[#1868B8]" />
-              <span className="font-mono text-[11px] text-[#071B2E] font-medium">Equipa Qualificada</span>
+              <span className="font-mono text-[11px] text-[#071B2E] font-medium">
+                Equipa Qualificada
+              </span>
             </div>
 
             <div className="flex items-center gap-2 p-2 rounded bg-[#F8FAFC] border border-slate-200">
               <ShieldCheck className="w-3.5 h-3.5 text-[#1868B8]" />
-              <span className="font-mono text-[11px] text-[#071B2E] font-medium">Proteção Ambiental</span>
+              <span className="font-mono text-[11px] text-[#071B2E] font-medium">
+                Proteção Ambiental
+              </span>
             </div>
           </div>
         </div>
@@ -72,8 +85,12 @@ export const Page09SepticService: React.FC = () => {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#071B2E] via-transparent to-transparent opacity-80 pointer-events-none" />
             <div className="absolute bottom-2 left-3 right-3 flex justify-between items-center text-white z-10">
-              <span className="font-sans font-bold text-xs">Camião Limpeza de Fossa Auto-Vácuo</span>
-              <span className="font-mono text-[10px] bg-[#1868B8] px-2 py-0.5 rounded font-bold">DISPONÍVEL</span>
+              <span className="font-sans font-bold text-xs">
+                Camião Limpeza de Fossa Auto-Vácuo
+              </span>
+              <span className="font-mono text-[10px] bg-[#1868B8] px-2 py-0.5 rounded font-bold">
+                DISPONÍVEL
+              </span>
             </div>
           </div>
 
@@ -86,7 +103,9 @@ export const Page09SepticService: React.FC = () => {
             <div className="absolute inset-0 bg-gradient-to-t from-[#071B2E] via-transparent to-transparent opacity-80 pointer-events-none" />
             <div className="absolute bottom-2 left-3 right-3 flex justify-between items-center text-white">
               <span className="font-sans font-bold text-xs">Operação de Remoção de Efluentes</span>
-              <span className="font-mono text-[10px] bg-[#071B2E] border border-cyan-400/40 text-cyan-300 px-2 py-0.5 rounded font-bold">SANEAMENTO</span>
+              <span className="font-mono text-[10px] bg-[#071B2E] border border-cyan-400/40 text-cyan-300 px-2 py-0.5 rounded font-bold">
+                SANEAMENTO
+              </span>
             </div>
           </div>
         </div>

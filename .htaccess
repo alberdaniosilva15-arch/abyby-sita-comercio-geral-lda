@@ -1,0 +1,53 @@
+# ====================================================================
+# ABYBY SITA COMÉRCIO GERAL, LDA — APACHE HARDENED CONFIGURATION (.htaccess)
+# ====================================================================
+
+# 1. Desativar Listagem de Diretórios (Anti-Directory Traversal / Info Leak)
+Options -Indexes -MultiViews
+
+# 2. Bloqueio Rígido de Ficheiros Sensíveis e Código-Fonte
+<FilesMatch "(^\.|\.env|\.git|\.ts$|\.tsx$|\.json$|\.sql$|\.log$|\.md$|\.sh$|\.yml$|\.yaml$|config\.php|package\.json|tsconfig\.json)">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# 3. Cabeçalhos de Segurança HTTP (Anti-Clickjacking, Anti-MIME Sniffing, XSS)
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    Header set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+</IfModule>
+
+# 4. Motor de Reescrita de URLs (SPA + Rotas PHP da API)
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Prevenir acesso direto à pasta api/config.php
+    RewriteRule ^api/config\.php$ - [F,L]
+
+    # ── Rotas da API em PHP ──
+    RewriteRule ^api/chat/?$ api/chat.php [L,QSA]
+    RewriteRule ^api/enhance-quote/?$ api/enhance-quote.php [L,QSA]
+    RewriteRule ^api/contact/?$ api/contact.php [L,QSA]
+    RewriteRule ^api/recrutamento/(.*)$ api/recrutamento.php/$1 [L,QSA]
+    RewriteRule ^api/recrutamento/?$ api/recrutamento.php [L,QSA]
+    RewriteRule ^api/news/(.*)$ api/news.php/$1 [L,QSA]
+    RewriteRule ^api/news/?$ api/news.php [L,QSA]
+    RewriteRule ^api/admin/(.*)$ api/admin.php/$1 [L,QSA]
+    RewriteRule ^api/admin/?$ api/admin.php [L,QSA]
+
+    # ── Ficheiros e Pastas Estáticos (Assets, Imagens, etc.) ──
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # ── Fallback SPA para o React Router (funciona tanto na raiz como em subpastas) ──
+    RewriteRule . index.html [L]
+</IfModule>

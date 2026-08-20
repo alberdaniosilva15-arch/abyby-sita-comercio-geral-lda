@@ -1,20 +1,66 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# ABYBY SITA COMÉRCIO GERAL, LDA — Website Institucional
 
-# Run and deploy your AI Studio app
+Este é o repositório do website institucional da **ABYBY SITA COMÉRCIO GERAL, LDA**, uma empresa angolana especializada em soluções de logística, marítimos, offshore e fornecimento industrial.
 
-This contains everything you need to run your app locally.
+## 🚀 Tecnologias Utilizadas
 
-View your app in AI Studio: https://ai.studio/apps/1db5764d-4767-44b0-a184-10dec208595e
+- **Frontend**: React 19, TypeScript, Vite, TailwindCSS (v4)
+- **Backend/API**: Node.js, Express (integrado com o Vite no modo desenvolvimento e compilado no modo produção)
+- **Inteligência Artificial**: Google Gemini AI (Assistente Virtual integrado)
+- **Animações**: Framer Motion & GSAP
+- **Segurança**: Helmet, Express Rate Limit, XSS sanitization
 
-## Run Locally
+## 📋 Pré-requisitos
 
-**Prerequisites:**  Node.js
+- Node.js v22 (ou superior)
+- NPM
 
+## 🛠️ Configuração Inicial
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+1. **Instalar dependências**:
+   ```bash
+   npm install
+   ```
+
+2. **Configurar variáveis de ambiente**:
+   Copie o ficheiro `.env.example` para `.env` e preencha as variáveis necessárias (nomeadamente a `GEMINI_API_KEY` para o assistente virtual):
+   ```bash
+   cp .env.example .env
+   ```
+
+## 💻 Desenvolvimento Local
+
+Inicie o servidor de desenvolvimento (que corre o backend Express com o frontend Vite):
+
+```bash
+npm run dev
+```
+
+O site estará disponível em `http://localhost:5173` (ou na porta que foi configurada).
+
+## 🏗️ Build e Produção
+
+1. **Validar código (Lint, Types e Format)**:
+   ```bash
+   npm run format
+   npm run lint
+   ```
+
+2. **Compilar para produção**:
+   Gera a pasta `dist` (assets estáticos públicos) e `dist-server` (backend).
+   ```bash
+   npm run build
+   ```
+
+3. **Iniciar o servidor de produção**:
+   ```bash
+   npm run start
+   ```
+
+## 🔒 Segurança e Resiliência (Hardening)
+
+O projecto foi preparado para produção, com:
+- **Protecção DDoS e Rate Limiting** nos endpoints (ex: submissão de formulário e chat).
+- **Graceful Shutdown** no servidor Express.
+- **Segurança Web**: CSP, cabeçalhos Helmet e higienização (XSS) de inputs.
+- **Validação Automática** via GitHub Actions (CI) antes de merges para produção.

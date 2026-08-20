@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layers, CheckCircle2 } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
 import { ImageWithLoader } from '../ImageWithLoader';
 import steelPipesImg from '../../assets/images/vendas_tubagens_pipes.png';
 
@@ -42,7 +42,11 @@ export const Page07IndustrialSupply: React.FC = () => {
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-4 items-center mb-2">
         <div className="lg:col-span-7">
           <p className="font-sans text-xs md:text-sm text-[#EFF4F8]/90 leading-relaxed">
-            O serviço de Venda de Tubagens da <strong>Abyby Sita Comércio Geral, LDA</strong> disponibiliza soluções completas e de elevada qualidade para os setores industrial, petrolífero, construção e infraestruturas. Fornecemos uma ampla gama de tubagens (pipes), adequadas para condução de fluidos, gás, água e sistemas técnicos. Trabalhamos com aço carbono, aço inoxidável e materiais certificados segundo normas internacionais.
+            O serviço de Venda de Tubagens da <strong>Abyby Sita Comércio Geral, LDA</strong>{' '}
+            disponibiliza soluções completas e de elevada qualidade para os setores industrial,
+            petrolífero, construção e infraestruturas. Fornecemos uma ampla gama de tubagens
+            (pipes), adequadas para condução de fluidos, gás, água e sistemas técnicos. Trabalhamos
+            com aço carbono, aço inoxidável e materiais certificados segundo normas internacionais.
           </p>
         </div>
         <div className="lg:col-span-5 h-28 rounded-xl overflow-hidden border border-[#7E92A6]/30 relative group shadow-md">
@@ -53,8 +57,12 @@ export const Page07IndustrialSupply: React.FC = () => {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#071B2E] via-transparent to-transparent opacity-80 pointer-events-none" />
           <div className="absolute bottom-2 left-3 right-3 flex justify-between items-center z-10">
-            <span className="font-sans font-bold text-xs text-white">Estoque de Tubagens de Aço</span>
-            <span className="font-mono text-[10px] text-[#1868B8] bg-[#071B2E] px-2 py-0.5 rounded border border-[#1868B8]/40">API 5L / ASTM</span>
+            <span className="font-sans font-bold text-xs text-white">
+              Estoque de Tubagens de Aço
+            </span>
+            <span className="font-mono text-[10px] text-[#1868B8] bg-[#071B2E] px-2 py-0.5 rounded border border-[#1868B8]/40">
+              API 5L / ASTM
+            </span>
           </div>
         </div>
       </div>

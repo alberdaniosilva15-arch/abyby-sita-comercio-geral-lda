@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { ServiceItem } from '../../types';
 
 interface PageProps {
@@ -11,47 +12,65 @@ const SERVICES_LIST: ServiceItem[] = [
     folio: '01',
     title: 'Oil & Gas / Rope Access',
     subtitle: 'Acesso por cordas certificado, inspeção técnica e manutenção industrial em altura.',
-    targetPageIndex: 3,
+    targetPath: '/offshore/rope-access',
   },
   {
     folio: '02',
     title: 'Aluguer & Rent-a-Car',
-    subtitle: 'Navios, gruas de 50/100t, camiões trailer e frota Rent-a-Car comercial e passageiro.',
-    targetPageIndex: 4,
+    subtitle:
+      'Navios, gruas de 50/100t, camiões trailer e frota Rent-a-Car comercial e passageiro.',
+    targetPath: '/solucoes/aluguer-equipamentos',
   },
   {
     folio: '03',
-    title: 'Equipamentos Pesados e Transporte',
-    subtitle: 'Operações industriais, movimentação de cargas pesadas em terra e transporte marítimo.',
-    targetPageIndex: 5,
+    title: 'Material Hospitalar',
+    subtitle: 'Fornecimento de material e equipamento hospitalar para o sector da saúde.',
+    targetPath: '/industrias',
   },
   {
     folio: '04',
-    title: 'Fornecimento Industrial (Tubagens / Pipes)',
-    subtitle: 'Venda de tubagens de aço carbono e inoxidável com certificação internacional.',
-    targetPageIndex: 6,
+    title: 'Equipamentos Pesados e Transporte',
+    subtitle:
+      'Operações industriais, movimentação de cargas pesadas em terra e transporte marítimo.',
+    targetPath: '/solucoes/aluguer-equipamentos',
   },
   {
     folio: '05',
-    title: 'Produtos & Material Ferroso',
-    subtitle: 'Talhas, balanças, containers standard e refrigerados, kits de soldadura.',
-    targetPageIndex: 7,
+    title: 'Fornecimento Industrial (Tubagens / Pipes)',
+    subtitle: 'Venda de tubagens de aço carbono e inoxidável com certificação internacional.',
+    targetPath: '/solucoes/venda-pipes',
   },
   {
     folio: '06',
-    title: 'Serviço de Limpeza de Fossa',
-    subtitle: 'Remoção e descarte ambientalmente responsável para setores industrial e residencial.',
-    targetPageIndex: 8,
+    title: 'Produtos & Material Ferroso',
+    subtitle: 'Talhas, balanças, containers standard e refrigerados, kits de soldadura.',
+    targetPath: '/solucoes/venda-pipes',
   },
   {
     folio: '07',
+    title: 'Frescos & Bens Alimentares',
+    subtitle:
+      'Arroz, feijão, proteínas, hortícolas e frutas — abastecimento essencial em fresco.',
+    targetPath: '/sobre/setores-atuacao',
+  },
+  {
+    folio: '08',
+    title: 'Serviço de Limpeza de Fossa',
+    subtitle:
+      'Remoção e descarte ambientalmente responsável para setores industrial e residencial.',
+    targetPath: '/solucoes/limpeza/fossa',
+  },
+  {
+    folio: '09',
     title: 'Blue Energy (Parceria Oficial Simple Green)',
     subtitle: 'Soluções sustentáveis de limpeza industrial e consultoria ambiental HSE.',
-    targetPageIndex: 9,
+    targetPath: '/solucoes/limpeza/industrial',
   },
 ];
 
 export const Page03ServicesIndex: React.FC<PageProps> = ({ onNavigate }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="relative w-full h-full min-h-[680px] bg-[#F4F7FA] text-[#071B2E] p-6 md:p-12 flex flex-col justify-between overflow-hidden select-none">
       {/* Page Header */}
@@ -75,7 +94,7 @@ export const Page03ServicesIndex: React.FC<PageProps> = ({ onNavigate }) => {
         {SERVICES_LIST.map((srv) => (
           <button
             key={srv.folio}
-            onClick={() => onNavigate(srv.targetPageIndex)}
+            onClick={() => srv.targetPath ? navigate(srv.targetPath) : onNavigate(srv.targetPageIndex!)}
             className="group py-3 px-3 md:px-4 flex items-center justify-between hover:bg-white hover:shadow-md transition-all text-left rounded-lg cursor-pointer"
           >
             <div className="flex items-center gap-4 md:gap-6">
@@ -87,8 +106,9 @@ export const Page03ServicesIndex: React.FC<PageProps> = ({ onNavigate }) => {
                 <h3 className="font-sans font-bold text-sm md:text-base text-[#071B2E] group-hover:text-[#1868B8] transition-colors flex items-center gap-2">
                   {srv.title}
                 </h3>
-                <p className="font-sans text-xs text-slate-500 line-clamp-1">
-                  {srv.subtitle}
+                <p className="font-sans text-xs text-slate-500 line-clamp-1">{srv.subtitle}</p>
+                <p className="font-mono text-[10px] text-[#1868B8] mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                  Clique para saber mais →
                 </p>
               </div>
             </div>
@@ -104,7 +124,7 @@ export const Page03ServicesIndex: React.FC<PageProps> = ({ onNavigate }) => {
       {/* Footer Info */}
       <div className="relative z-10 pt-4 border-t border-slate-200 flex justify-between items-center text-[11px] font-mono text-slate-500">
         <span>SERVIÇOS DE LOGÍSTICA, MARÍTIMO & OFFSHORE</span>
-        <span>7 CATEGORIAS OPERACIONAIS</span>
+        <span>9 CATEGORIAS OPERACIONAIS</span>
       </div>
     </div>
   );

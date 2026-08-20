@@ -1,8 +1,8 @@
 import React from 'react';
-import { Truck, Car, Anchor, ShieldCheck } from 'lucide-react';
+import { Car } from 'lucide-react';
 import { ImageWithLoader } from '../ImageWithLoader';
 import tiposViaturasImg from '../../assets/images/tipos_de_viaturas.png';
-import tiposViaturasPesadosImg from '../../assets/images/tipos_de_viaturas_pesados.png';
+import { FleetHoverSwipe } from '../fleet/FleetHoverSwipe';
 
 export const Page05RentalFleet: React.FC = () => {
   return (
@@ -25,25 +25,18 @@ export const Page05RentalFleet: React.FC = () => {
         {/* Left Column: Aluguer Text & Fleet Overview */}
         <div className="lg:col-span-5 flex flex-col gap-3">
           <p className="font-sans text-xs md:text-sm text-slate-700 leading-relaxed">
-            A <strong>Abyby Sita Comércio Geral, LDA</strong> oferece serviços de aluguer de equipamentos e meios de transporte como uma solução prática, eficiente e economicamente vantajosa para empresas e projetos de diferentes dimensões.
+            A <strong>Abyby Sita Comércio Geral, LDA</strong> oferece serviços de aluguer de
+            equipamentos e meios de transporte como uma solução prática, eficiente e economicamente
+            vantajosa para empresas e projetos de diferentes dimensões.
           </p>
           <p className="font-sans text-xs md:text-sm text-slate-700 leading-relaxed">
-            A nossa frota inclui navios, camiões trailers, gruas de 50 e 100 toneladas, viaturas no sistema Rent-a-Car e porta-contentores, garantindo alto desempenho, fiabilidade e segurança em todas as operações em Angola.
+            A nossa frota inclui navios, camiões trailers, gruas de 50 e 100 toneladas, viaturas no
+            sistema Rent-a-Car e porta-contentores, garantindo alto desempenho, fiabilidade e
+            segurança em todas as operações em Angola.
           </p>
 
-          {/* Featured Fleet Banner Photo */}
-          <div className="rounded-xl overflow-hidden border border-slate-200 relative shadow-sm group h-36 mt-2">
-            <ImageWithLoader
-              src={tiposViaturasPesadosImg}
-              alt="Frota de Aluguer - Camiões, Gruas, SUV e Navio"
-              imageClassName="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#071B2E] via-[#071B2E]/30 to-transparent pointer-events-none" />
-            <div className="absolute bottom-2 left-3 right-3 flex justify-between items-center text-white">
-              <span className="font-sans font-bold text-xs">Frota Pesada & Rent-a-Car</span>
-              <span className="font-mono text-[10px] bg-[#1868B8] px-2 py-0.5 rounded font-bold">LUANDA & PROVÍNCIAS</span>
-            </div>
-          </div>
+          {/* Featured Fleet Interactive Cards */}
+          <FleetHoverSwipe />
         </div>
 
         {/* Right Column: "Tipos de Viaturas:" Grid from PDF screenshots */}

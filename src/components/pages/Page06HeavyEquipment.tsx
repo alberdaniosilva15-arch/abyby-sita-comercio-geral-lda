@@ -1,5 +1,5 @@
 import React from 'react';
-import { Anchor, ShieldCheck } from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
 import { ImageWithLoader } from '../ImageWithLoader';
 import tiposEquipamentosImg from '../../assets/images/tipos_equipamentos_pesados.png';
 import gruaImg from '../../assets/images/tipos_equipamentos_grua.png';
@@ -23,7 +23,12 @@ export const Page06HeavyEquipment: React.FC = () => {
       {/* Main Text */}
       <div className="relative z-10 max-w-4xl mb-4">
         <p className="font-sans text-xs md:text-sm text-slate-700 leading-relaxed">
-          O serviço de Equipamentos Pesados e Transporte da <strong>Abyby Sita Comércio Geral, LDA</strong> oferece soluções completas para operações industriais, logísticas e de construção, disponibilizando gruas, camiões trailer e navios para diferentes tipos de projetos. A nossa frota é composta por equipamentos modernos, sujeitos a manutenção rigorosa e inspeções regulares, garantindo máxima segurança e fiabilidade em terra e no mar.
+          O serviço de Equipamentos Pesados e Transporte da{' '}
+          <strong>Abyby Sita Comércio Geral, LDA</strong> oferece soluções completas para operações
+          industriais, logísticas e de construção, disponibilizando gruas, camiões trailer e navios
+          para diferentes tipos de projetos. A nossa frota é composta por equipamentos modernos,
+          sujeitos a manutenção rigorosa e inspeções regulares, garantindo máxima segurança e
+          fiabilidade em terra e no mar.
         </p>
       </div>
 
@@ -51,25 +56,36 @@ export const Page06HeavyEquipment: React.FC = () => {
             <div className="p-4 flex flex-col flex-1">
               <h3 className="font-display font-bold text-lg text-[#071B2E] mb-1">Gruas Pesadas</h3>
               <p className="font-sans text-xs text-slate-600 leading-relaxed mb-3">
-                Operação de içamento e movimentação de estruturas metálicas, módulos de perfuração e carga industrial de grande porte. Gruas de 50 e 100 toneladas.
+                Operação de içamento e movimentação de estruturas metálicas, módulos de perfuração e
+                carga industrial de grande porte. Gruas de 50 e 100 toneladas.
               </p>
             </div>
           </div>
 
           <div className="flex flex-col gap-3 justify-center">
             <div className="p-4 rounded-xl border border-slate-200 bg-white shadow-sm">
-              <h3 className="font-display font-bold text-lg text-[#071B2E] mb-1">Camiões Trailer</h3>
+              <h3 className="font-display font-bold text-lg text-[#071B2E] mb-1">
+                Camiões Trailer
+              </h3>
               <p className="font-sans text-xs text-slate-600 leading-relaxed">
-                Trailers robustos de alta capacidade para transporte de cargas indivisíveis, tubagens e porta-containers em rotas nacionais.
+                Trailers robustos de alta capacidade para transporte de cargas indivisíveis,
+                tubagens e porta-containers em rotas nacionais.
               </p>
-              <span className="font-mono text-[10px] text-[#1868B8] font-bold mt-2 inline-block">5 - 100 TONELADAS</span>
+              <span className="font-mono text-[10px] text-[#1868B8] font-bold mt-2 inline-block">
+                5 - 100 TONELADAS
+              </span>
             </div>
             <div className="p-4 rounded-xl border border-slate-200 bg-white shadow-sm">
-              <h3 className="font-display font-bold text-lg text-[#071B2E] mb-1">Navio / Caboagem</h3>
+              <h3 className="font-display font-bold text-lg text-[#071B2E] mb-1">
+                Navio / Caboagem
+              </h3>
               <p className="font-sans text-xs text-slate-600 leading-relaxed">
-                Embarcações dedicadas ao transporte marítimo costeiro e apoio logístico offshore entre Luanda, Cabinda e bases petrolíferas.
+                Embarcações dedicadas ao transporte marítimo costeiro e apoio logístico offshore
+                entre Luanda, Cabinda e bases petrolíferas.
               </p>
-              <span className="font-mono text-[10px] text-[#1868B8] font-bold mt-2 inline-block">LOGÍSTICA MARÍTIMA</span>
+              <span className="font-mono text-[10px] text-[#1868B8] font-bold mt-2 inline-block">
+                LOGÍSTICA MARÍTIMA
+              </span>
             </div>
           </div>
         </div>
@@ -79,7 +95,8 @@ export const Page06HeavyEquipment: React.FC = () => {
       <div className="relative z-10 p-3 rounded-lg bg-white border border-slate-200 flex items-center gap-3 text-xs shadow-sm">
         <ShieldCheck className="w-5 h-5 text-[#1868B8] flex-shrink-0" />
         <span className="font-sans text-slate-700">
-          Todos os equipamentos possuem certificados de teste de carga em dia e operadores formados com licenças internacionais.
+          Todos os equipamentos possuem certificados de teste de carga em dia e operadores formados
+          com licenças internacionais.
         </span>
       </div>
 
