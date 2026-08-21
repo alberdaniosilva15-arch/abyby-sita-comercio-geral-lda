@@ -2,11 +2,11 @@ export interface ActivityVideo {
   id: string;
   title: string;
   category: string;
-  description: string; // O campo "DIZER" com legenda e descrição profissional
+  description: string; // Legenda/descrição técnica ("DIZER")
   videoUrl: string;
   thumbnailUrl?: string;
   tag: string;
-  row: 'top' | 'bottom'; // 'top' para a linha que roda para a direita, 'bottom' para a que roda para a esquerda
+  row: 'top' | 'bottom'; // 'top' rola para a direita, 'bottom' para a esquerda
 }
 
 export const ACTIVITIES_VIDEOS: ActivityVideo[] = [
@@ -86,3 +86,15 @@ export const ACTIVITIES_VIDEOS: ActivityVideo[] = [
     row: 'bottom',
   },
 ];
+
+/**
+ * Gera URL de poster JPG ultra-leve a partir de vídeo do Cloudinary
+ */
+export function getVideoPosterUrl(videoUrl: string): string {
+  if (videoUrl.includes('cloudinary.com') && videoUrl.endsWith('.mp4')) {
+    return videoUrl
+      .replace('/upload/', '/upload/so_1.5,w_450,c_scale,q_auto,f_auto/')
+      .replace('.mp4', '.jpg');
+  }
+  return '';
+}

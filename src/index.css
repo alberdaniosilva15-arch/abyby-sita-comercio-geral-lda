@@ -662,36 +662,36 @@ textarea:focus-visible {
   }
 }
 
-/* Activities Dual-direction Horizontal Marquee */
+/* Activities Dual-direction Horizontal Marquee with Gap Compensation */
 @keyframes marqueeScrollLeft {
   0% {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translate3d(calc(-50% - 12px), 0, 0);
   }
 }
 
 @keyframes marqueeScrollRight {
   0% {
-    transform: translateX(-50%);
+    transform: translate3d(calc(-50% - 12px), 0, 0);
   }
   100% {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
 .animate-marquee-left {
   display: flex;
   width: max-content;
-  animation: marqueeScrollLeft 50s linear infinite;
+  animation: marqueeScrollLeft 45s linear infinite;
   will-change: transform;
 }
 
 .animate-marquee-right {
   display: flex;
   width: max-content;
-  animation: marqueeScrollRight 50s linear infinite;
+  animation: marqueeScrollRight 45s linear infinite;
   will-change: transform;
 }
 
