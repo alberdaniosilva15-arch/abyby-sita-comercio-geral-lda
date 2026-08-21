@@ -205,11 +205,21 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage = -1, onNavigate }) 
           <button
             onClick={() => handleNavClick(3)}
             className={`font-mono text-xs uppercase tracking-wider transition-all relative h-full flex items-center ${
-              isNavActive('contactos', undefined, 3) ? 'text-white font-semibold' : 'text-[#B0C4D8] hover:text-white'
+              isNavActive('actividades', undefined, 3) ? 'text-white font-semibold' : 'text-[#B0C4D8] hover:text-white'
+            }`}
+          >
+            ACTIVIDADES
+            {isNavActive('actividades', undefined, 3) && <span className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-cyan-400 rounded-t-full shadow-[0_0_8px_#38bdf8]" />}
+          </button>
+
+          <button
+            onClick={() => handleNavClick(4)}
+            className={`font-mono text-xs uppercase tracking-wider transition-all relative h-full flex items-center ${
+              isNavActive('contactos', undefined, 4) ? 'text-white font-semibold' : 'text-[#B0C4D8] hover:text-white'
             }`}
           >
             CONTACTOS
-            {isNavActive('contactos', undefined, 3) && <span className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#1868B8] rounded-t-full shadow-[0_0_8px_#1868B8]" />}
+            {isNavActive('contactos', undefined, 4) && <span className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#1868B8] rounded-t-full shadow-[0_0_8px_#1868B8]" />}
           </button>
         </nav>
 
@@ -405,16 +415,28 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage = -1, onNavigate }) 
               </span>
             </button>
 
-            {/* Contactos */}
+            {/* Actividades */}
             <button
               onClick={() => handleNavClick(3)}
+              className="text-left font-mono text-sm font-bold uppercase tracking-wider text-white hover:text-cyan-300 p-4 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 transition-all flex items-center justify-between cursor-pointer active:scale-98"
+            >
+              <span className="flex items-center gap-2.5">
+                <span className="w-2 h-2 rounded-full bg-cyan-400" />
+                ACTIVIDADES EM VÍDEO
+              </span>
+              <span className="text-xs text-slate-500 font-mono">03</span>
+            </button>
+
+            {/* Contactos */}
+            <button
+              onClick={() => handleNavClick(4)}
               className="text-left font-mono text-sm font-bold uppercase tracking-wider text-white hover:text-cyan-300 p-4 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 transition-all flex items-center justify-between cursor-pointer active:scale-98"
             >
               <span className="flex items-center gap-2.5">
                 <span className="w-2 h-2 rounded-full bg-sky-400" />
                 CONTACTOS & PROPOSTAS
               </span>
-              <span className="text-xs text-slate-500 font-mono">03</span>
+              <span className="text-xs text-slate-500 font-mono">04</span>
             </button>
           </div>
 

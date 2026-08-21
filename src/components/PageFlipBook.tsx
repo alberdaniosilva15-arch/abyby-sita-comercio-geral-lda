@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Page01Hero } from './pages/Page01Hero';
 import { Page02About } from './pages/Page02About';
 import { Page03ServicesIndex } from './pages/Page03ServicesIndex';
+import { PageActivitiesVideos } from './pages/PageActivitiesVideos';
 import { Page12Contacts } from './pages/Page12Contacts';
 
 interface PageFlipBookProps {
@@ -16,6 +17,7 @@ export const SECTION_IDS = [
   'inicio',
   'sobre',
   'servicos',
+  'actividades',
   'contactos',
 ];
 
@@ -63,7 +65,8 @@ export const PageFlipBook: React.FC<PageFlipBookProps> = ({ onPageChange }) => {
     { id: SECTION_IDS[0], component: <Page01Hero onNavigate={handleNavigateToSection} /> },
     { id: SECTION_IDS[1], component: <Page02About /> },
     { id: SECTION_IDS[2], component: <Page03ServicesIndex onNavigate={handleNavigateToSection} /> },
-    { id: SECTION_IDS[3], component: <Page12Contacts /> },
+    { id: SECTION_IDS[3], component: <PageActivitiesVideos /> },
+    { id: SECTION_IDS[4], component: <Page12Contacts /> },
   ];
 
   return (
