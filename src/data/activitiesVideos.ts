@@ -9,7 +9,7 @@ export interface ActivityVideo {
 }
 
 export const ACTIVITIES_VIDEOS: ActivityVideo[] = [
-  // ── LINHA SUPERIOR (Mobilização & Frota Pesada) ──────────────────────────
+  // ── LINHA SUPERIOR (Frota, Autocarros, Gruas & Movimentação Pesada) ────────
   {
     id: 'act-porta-maquinas',
     title: 'Porta-Máquinas e Movimentação Pesada',
@@ -20,13 +20,42 @@ export const ACTIVITIES_VIDEOS: ActivityVideo[] = [
     row: 'top',
   },
   {
+    id: 'act-autocarros-frota',
+    title: 'Aluguer de Autocarros para Transporte Corporativo',
+    category: 'Transporte de Pessoal',
+    tag: 'FROTA DE PASSAGEIROS',
+    description: 'Disponibilização de autocarros modernos e climatizados para transporte de equipas industriais, delegações e logística de pessoal em Luanda e províncias.',
+    videoUrl: 'https://res.cloudinary.com/vgxylpmd/video/upload/v1787320267/autocarros_sem_som_xdxaci.mp4',
+    row: 'top',
+  },
+  {
+    id: 'act-autocarros-interior',
+    title: 'Conforto e Segurança no Transporte de Equipas',
+    category: 'Logística de Pessoal',
+    tag: 'TRANSPORTE EXECUTIVO',
+    description: 'Interior equipado com elevados padrões de ergonomia, cintos de segurança certificados e climatização contínua para viagens de curta e longa distância.',
+    videoUrl: 'https://res.cloudinary.com/vgxylpmd/video/upload/v1787327361/autocarros_sem_som2_xkeniv.mp4',
+    row: 'top',
+  },
+  {
+    id: 'act-aluguer-gruas',
+    title: 'Aluguer de Gruas e Máquinas Pesadas',
+    category: 'Equipamentos Pesados',
+    tag: 'ELEVAÇÃO & GRUAS',
+    description: 'Içamento técnico e elevação de cargas industriais com gruas certificadas e operadores qualificados para operações de alta complexidade em obra.',
+    videoUrl: 'https://res.cloudinary.com/vgxylpmd/video/upload/v1787327102/aluguer_de_maquinas_sem_son_webiq3.mp4',
+    row: 'top',
+  },
+
+  // ── LINHA INFERIOR (Pipes, Sucatas, Tubagens & Distribuição) ───────────────
+  {
     id: 'act-sucatas',
     title: 'Compra de Sucatas em Grandes Quantidades',
     category: 'Metalomecânica & Reciclagem',
     tag: 'RECICLAGEM & SUCATAS',
     description: 'Triagem, recolha técnica e aquisição industrial em grande escala de sucatas ferrosas e estruturas metálicas desativadas.',
     videoUrl: 'https://res.cloudinary.com/vgxylpmd/video/upload/v1787318488/compras_de_sucatas_bwfqrv.mp4',
-    row: 'top',
+    row: 'bottom',
   },
   {
     id: 'act-pipes-escala',
@@ -35,10 +64,8 @@ export const ACTIVITIES_VIDEOS: ActivityVideo[] = [
     tag: 'PIPES & FITTINGS',
     description: 'Comercialização a granel de tubagens de aço carbono e ligas especiais para infraestruturas petrolíferas e industriais.',
     videoUrl: 'https://res.cloudinary.com/vgxylpmd/video/upload/v1787319592/compras_de_pipes_em_grande_escala_mfqrs7.mp4',
-    row: 'top',
+    row: 'bottom',
   },
-
-  // ── LINHA INFERIOR (Distribuição, Tubagens & Logística) ────────────────────
   {
     id: 'act-transporte-pipes',
     title: 'Transporte e Distribuição de Pipes',
