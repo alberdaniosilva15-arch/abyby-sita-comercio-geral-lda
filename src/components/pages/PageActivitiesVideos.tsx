@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Play, Eye, Sparkles, ChevronLeft, ChevronRight, Activity } from 'lucide-react';
 import { ACTIVITIES_VIDEOS, ActivityVideo, getVideoPosterUrl } from '../../data/activitiesVideos';
@@ -6,23 +6,76 @@ import { ActivitiesVideoModal } from '../activities/ActivitiesVideoModal';
 
 export const PageActivitiesVideos: React.FC = () => {
   const [selectedVideo, setSelectedVideo] = useState<ActivityVideo | null>(null);
+  const [isPausedTop, setIsPausedTop] = useState(false);
+  const [isPausedBottom, setIsPausedBottom] = useState(false);
 
   const topRowVideos = ACTIVITIES_VIDEOS.filter((v) => v.row === 'top');
   const bottomRowVideos = ACTIVITIES_VIDEOS.filter((v) => v.row === 'bottom');
 
+  // Repetição quádrupla para garantir preenchimento total e loop infinito sem falhas
+  const topLoop = [...topRowVideos, ...topRowVideos, ...topRowVideos, ...topRowVideos];
+  const bottomLoop = [...bottomRowVideos, ...bottomRowVideos, ...bottomRowVideos, ...bottomRowVideos];
+
   const topScrollRef = useRef<HTMLDivElement>(null);
   const bottomScrollRef = useRef<HTMLDivElement>(null);
 
-  const handleManualScroll = (ref: React.RefObject<HTMLDivElement | null>, direction: 'left' | 'right') => {
+  // ── AUTO-SCROLL SUAVE & CONTÍNUO A 60 FPS COM LOOP INFINITO ──────────────────
+  useEffect(() => {
+    let animId: number;
+    const topEl = topScrollRef.current;
+    const bottomEl = bottomScrollRef.current;
+
+    // Inicializa a linha superior a meio para poder rolar para a direita desde o 1º frame
+    if (topEl && topEl.scrollLeft === 0) {
+      topEl.scrollLeft = topEl.scrollWidth / 3;
+    }
+
+    const step = () => {
+      // 1. Linha Superior: Rola para a DIREITA (scrollLeft diminui)
+      if (topEl && !isPausedTop) {
+        topEl.scrollLeft -= 0.75;
+        if (topEl.scrollLeft <= 10) {
+          topEl.scrollLeft = (topEl.scrollWidth / 4) * 2;
+        }
+      }
+
+      // 2. Linha Inferior: Rola para a ESQUERDA (scrollLeft aumenta)
+      if (bottomEl && !isPausedBottom) {
+        bottomEl.scrollLeft += 0.75;
+        if (bottomEl.scrollLeft >= (bottomEl.scrollWidth / 4) * 2) {
+          bottomEl.scrollLeft = bottomEl.scrollWidth / 4;
+        }
+      }
+
+      animId = requestAnimationFrame(step);
+    };
+
+    animId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(animId);
+  }, [isPausedTop, isPausedBottom]);
+
+  // ── BOTÕES DE NAVEGAÇÃO MANUAL (AVANÇAR / RECUAR) ───────────────────────────
+  const handleManualScroll = (
+    ref: React.RefObject<HTMLDivElement | null>,
+    direction: 'left' | 'right',
+    setPause: (paused: boolean) => void
+  ) => {
     if (ref.current) {
+      // Pausa temporariamente o auto-scroll durante a interação manual
+      setPause(true);
       const scrollAmount = direction === 'left' ? -380 : 380;
       ref.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+
+      // Retoma o auto-scroll suave 2.5s após o clique
+      setTimeout(() => {
+        setPause(false);
+      }, 2500);
     }
   };
 
   return (
-    <section className="relative w-full py-16 sm:py-24 bg-gradient-to-b from-[#071B2E] via-[#040E18] to-[#071B2E] text-white overflow-hidden border-t border-b border-cyan-500/15">
-      {/* Iluminação de fundo subtil */}
+    <section className="relative w-full py-16 sm:py-24 bg-gradient-to-b from-[#071B2E] via-[#040E18] to-[#071B2E] text-white overflow-hidden border-t border-b border-cyan-500/15 select-none">
+      {/* Luzes de fundo atmosféricas */}
       <div className="absolute top-1/4 left-[-10%] w-[500px] h-[500px] bg-[#1868B8] rounded-full mix-blend-screen filter blur-[140px] opacity-[0.08] pointer-events-none" />
       <div className="absolute bottom-1/4 right-[-10%] w-[500px] h-[500px] bg-cyan-500 rounded-full mix-blend-screen filter blur-[140px] opacity-[0.06] pointer-events-none" />
 
@@ -51,29 +104,37 @@ export const PageActivitiesVideos: React.FC = () => {
         </motion.div>
       </div>
 
-      {/* ── LINHA 1 (SUPERIOR): VÍDEOS DE MOBILIZAÇÃO & OPERAÇÕES PESADAS ── */}
-      <div className="relative w-full mb-8 sm:mb-12 group pause-on-hover">
+      {/* ── LINHA 1 (SUPERIOR): MOBILIZAÇÃO & OPERAÇÕES PESADAS ── */}
+      <div
+        className="relative w-full mb-8 sm:mb-12 group"
+        onMouseEnter={() => setIsPausedTop(true)}
+        onMouseLeave={() => setIsPausedTop(false)}
+        onTouchStart={() => setIsPausedTop(true)}
+        onTouchEnd={() => setTimeout(() => setIsPausedTop(false), 2000)}
+      >
         <div className="max-w-7xl mx-auto px-4 mb-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-cyan-400" />
+            <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#38bdf8]" />
             <span className="text-xs font-mono text-cyan-300 uppercase tracking-widest font-semibold">
               Mobilização & Operações Pesadas
             </span>
           </div>
-          <div className="hidden sm:flex items-center gap-2">
+
+          {/* Botões de Navegação Manual Funcionais */}
+          <div className="flex items-center gap-2 z-10">
             <button
-              onClick={() => handleManualScroll(topScrollRef, 'left')}
-              className="p-2 rounded-xl bg-white/5 hover:bg-cyan-500/20 border border-white/10 text-slate-300 hover:text-cyan-300 transition-all cursor-pointer"
-              title="Recuar"
-              aria-label="Recuar linha superior"
+              onClick={() => handleManualScroll(topScrollRef, 'left', setIsPausedTop)}
+              className="p-2.5 rounded-xl bg-slate-900/80 hover:bg-cyan-500/25 border border-white/15 hover:border-cyan-400/50 text-slate-200 hover:text-cyan-300 transition-all cursor-pointer shadow-md active:scale-95 flex items-center justify-center"
+              title="Recuar Linha Superior"
+              aria-label="Recuar Linha Superior"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
             <button
-              onClick={() => handleManualScroll(topScrollRef, 'right')}
-              className="p-2 rounded-xl bg-white/5 hover:bg-cyan-500/20 border border-white/10 text-slate-300 hover:text-cyan-300 transition-all cursor-pointer"
-              title="Avançar"
-              aria-label="Avançar linha superior"
+              onClick={() => handleManualScroll(topScrollRef, 'right', setIsPausedTop)}
+              className="p-2.5 rounded-xl bg-slate-900/80 hover:bg-cyan-500/25 border border-white/15 hover:border-cyan-400/50 text-slate-200 hover:text-cyan-300 transition-all cursor-pointer shadow-md active:scale-95 flex items-center justify-center"
+              title="Avançar Linha Superior"
+              aria-label="Avançar Linha Superior"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
@@ -83,66 +144,52 @@ export const PageActivitiesVideos: React.FC = () => {
         {/* Trilho de Scroll Infinito Contínuo (Sem Espaços Vazios) */}
         <div
           ref={topScrollRef}
-          className="w-full overflow-x-auto scrollbar-none py-2"
+          className="w-full overflow-x-auto scrollbar-none py-2 scroll-smooth"
+          style={{ scrollBehavior: 'auto' }}
         >
-          <div className="flex gap-6 w-max">
-            {/* Bloco 1 */}
-            <div className="animate-marquee-right flex gap-6">
-              {topRowVideos.map((video) => (
-                <VideoActivityCard
-                  key={`top-g1-${video.id}`}
-                  video={video}
-                  onSelect={() => setSelectedVideo(video)}
-                />
-              ))}
-            </div>
-            {/* Bloco 2 (Continuação contínua) */}
-            <div className="animate-marquee-right flex gap-6" aria-hidden="true">
-              {topRowVideos.map((video) => (
-                <VideoActivityCard
-                  key={`top-g2-${video.id}`}
-                  video={video}
-                  onSelect={() => setSelectedVideo(video)}
-                />
-              ))}
-            </div>
-            {/* Bloco 3 (Garantia para ecrãs ultra-wide 4K) */}
-            <div className="animate-marquee-right flex gap-6" aria-hidden="true">
-              {topRowVideos.map((video) => (
-                <VideoActivityCard
-                  key={`top-g3-${video.id}`}
-                  video={video}
-                  onSelect={() => setSelectedVideo(video)}
-                />
-              ))}
-            </div>
+          <div className="flex gap-6 w-max px-4">
+            {topLoop.map((video, idx) => (
+              <VideoActivityCard
+                key={`top-${video.id}-${idx}`}
+                video={video}
+                onSelect={() => setSelectedVideo(video)}
+              />
+            ))}
           </div>
         </div>
       </div>
 
-      {/* ── LINHA 2 (INFERIOR): TUBAGENS, FITTINGS & LOGÍSTICA INDUSTRIAL ── */}
-      <div className="relative w-full group pause-on-hover">
+      {/* ── LINHA 2 (INFERIOR): PIPES, FITTINGS & LOGÍSTICA INDUSTRIAL ── */}
+      <div
+        className="relative w-full group"
+        onMouseEnter={() => setIsPausedBottom(true)}
+        onMouseLeave={() => setIsPausedBottom(false)}
+        onTouchStart={() => setIsPausedBottom(true)}
+        onTouchEnd={() => setTimeout(() => setIsPausedBottom(false), 2000)}
+      >
         <div className="max-w-7xl mx-auto px-4 mb-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#1868B8]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#1868B8] shadow-[0_0_8px_#1868B8]" />
             <span className="text-xs font-mono text-cyan-300 uppercase tracking-widest font-semibold">
               Pipes, Fittings & Logística Industrial
             </span>
           </div>
-          <div className="hidden sm:flex items-center gap-2">
+
+          {/* Botões de Navegação Manual Funcionais */}
+          <div className="flex items-center gap-2 z-10">
             <button
-              onClick={() => handleManualScroll(bottomScrollRef, 'left')}
-              className="p-2 rounded-xl bg-white/5 hover:bg-cyan-500/20 border border-white/10 text-slate-300 hover:text-cyan-300 transition-all cursor-pointer"
-              title="Recuar"
-              aria-label="Recuar linha inferior"
+              onClick={() => handleManualScroll(bottomScrollRef, 'left', setIsPausedBottom)}
+              className="p-2.5 rounded-xl bg-slate-900/80 hover:bg-cyan-500/25 border border-white/15 hover:border-cyan-400/50 text-slate-200 hover:text-cyan-300 transition-all cursor-pointer shadow-md active:scale-95 flex items-center justify-center"
+              title="Recuar Linha Inferior"
+              aria-label="Recuar Linha Inferior"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
             <button
-              onClick={() => handleManualScroll(bottomScrollRef, 'right')}
-              className="p-2 rounded-xl bg-white/5 hover:bg-cyan-500/20 border border-white/10 text-slate-300 hover:text-cyan-300 transition-all cursor-pointer"
-              title="Avançar"
-              aria-label="Avançar linha inferior"
+              onClick={() => handleManualScroll(bottomScrollRef, 'right', setIsPausedBottom)}
+              className="p-2.5 rounded-xl bg-slate-900/80 hover:bg-cyan-500/25 border border-white/15 hover:border-cyan-400/50 text-slate-200 hover:text-cyan-300 transition-all cursor-pointer shadow-md active:scale-95 flex items-center justify-center"
+              title="Avançar Linha Inferior"
+              aria-label="Avançar Linha Inferior"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
@@ -152,39 +199,17 @@ export const PageActivitiesVideos: React.FC = () => {
         {/* Trilho de Scroll Infinito Contínuo (Sem Espaços Vazios) */}
         <div
           ref={bottomScrollRef}
-          className="w-full overflow-x-auto scrollbar-none py-2"
+          className="w-full overflow-x-auto scrollbar-none py-2 scroll-smooth"
+          style={{ scrollBehavior: 'auto' }}
         >
-          <div className="flex gap-6 w-max">
-            {/* Bloco 1 */}
-            <div className="animate-marquee-left flex gap-6">
-              {bottomRowVideos.map((video) => (
-                <VideoActivityCard
-                  key={`bot-g1-${video.id}`}
-                  video={video}
-                  onSelect={() => setSelectedVideo(video)}
-                />
-              ))}
-            </div>
-            {/* Bloco 2 (Continuação contínua) */}
-            <div className="animate-marquee-left flex gap-6" aria-hidden="true">
-              {bottomRowVideos.map((video) => (
-                <VideoActivityCard
-                  key={`bot-g2-${video.id}`}
-                  video={video}
-                  onSelect={() => setSelectedVideo(video)}
-                />
-              ))}
-            </div>
-            {/* Bloco 3 (Garantia para ecrãs ultra-wide 4K) */}
-            <div className="animate-marquee-left flex gap-6" aria-hidden="true">
-              {bottomRowVideos.map((video) => (
-                <VideoActivityCard
-                  key={`bot-g3-${video.id}`}
-                  video={video}
-                  onSelect={() => setSelectedVideo(video)}
-                />
-              ))}
-            </div>
+          <div className="flex gap-6 w-max px-4">
+            {bottomLoop.map((video, idx) => (
+              <VideoActivityCard
+                key={`bot-${video.id}-${idx}`}
+                video={video}
+                onSelect={() => setSelectedVideo(video)}
+              />
+            ))}
           </div>
         </div>
       </div>
@@ -225,7 +250,7 @@ const VideoActivityCard: React.FC<VideoActivityCardProps> = ({ video, onSelect }
             alt={video.title}
             loading="lazy"
             decoding="async"
-            className="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-700 select-none"
+            className="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-700 select-none pointer-events-none"
             onError={(e) => {
               (e.target as HTMLElement).style.opacity = '0.3';
             }}
@@ -240,14 +265,14 @@ const VideoActivityCard: React.FC<VideoActivityCardProps> = ({ video, onSelect }
         <div className="absolute inset-0 bg-gradient-to-t from-[#071B2E] via-transparent to-black/30 pointer-events-none" />
 
         {/* Tag Superior */}
-        <div className="absolute top-3 left-3 z-10">
+        <div className="absolute top-3 left-3 z-10 pointer-events-none">
           <span className="px-2.5 py-1 rounded-md text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-wider bg-slate-950/85 text-cyan-300 border border-cyan-500/40 backdrop-blur-sm shadow-md">
             {video.tag}
           </span>
         </div>
 
         {/* Badge 'Vídeo' */}
-        <div className="absolute top-3 right-3 z-10">
+        <div className="absolute top-3 right-3 z-10 pointer-events-none">
           <span className="px-2 py-0.5 rounded text-[8px] font-mono text-slate-300 bg-black/60 backdrop-blur-xs border border-white/10">
             Vídeo HD
           </span>
@@ -261,7 +286,7 @@ const VideoActivityCard: React.FC<VideoActivityCardProps> = ({ video, onSelect }
         </div>
 
         {/* Indicador de Ação no Rodapé */}
-        <div className="absolute bottom-2 right-3 flex items-center gap-1 text-[10px] font-mono text-cyan-300 opacity-0 group-hover/card:opacity-100 transition-opacity">
+        <div className="absolute bottom-2 right-3 flex items-center gap-1 text-[10px] font-mono text-cyan-300 opacity-0 group-hover/card:opacity-100 transition-opacity pointer-events-none">
           <Eye className="w-3 h-3" />
           <span>Ver vídeo</span>
         </div>
