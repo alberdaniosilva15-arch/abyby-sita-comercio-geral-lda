@@ -10,16 +10,12 @@ export const PageActivitiesVideos: React.FC = () => {
   const topRowVideos = ACTIVITIES_VIDEOS.filter((v) => v.row === 'top');
   const bottomRowVideos = ACTIVITIES_VIDEOS.filter((v) => v.row === 'bottom');
 
-  // Duplicação exata 2x (Grupo A e Grupo B) para loop contínuo de 50%
-  const topLoop = [...topRowVideos, ...topRowVideos];
-  const bottomLoop = [...bottomRowVideos, ...bottomRowVideos];
-
   const topScrollRef = useRef<HTMLDivElement>(null);
   const bottomScrollRef = useRef<HTMLDivElement>(null);
 
   const handleManualScroll = (ref: React.RefObject<HTMLDivElement | null>, direction: 'left' | 'right') => {
     if (ref.current) {
-      const scrollAmount = direction === 'left' ? -360 : 360;
+      const scrollAmount = direction === 'left' ? -380 : 380;
       ref.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
   };
@@ -55,13 +51,13 @@ export const PageActivitiesVideos: React.FC = () => {
         </motion.div>
       </div>
 
-      {/* ── LINHA 1 (SUPERIOR): VÍDEOS A RODAR EM DIRECÇÃO À DIREITA ➡️ ── */}
+      {/* ── LINHA 1 (SUPERIOR): VÍDEOS DE MOBILIZAÇÃO & OPERAÇÕES PESADAS ── */}
       <div className="relative w-full mb-8 sm:mb-12 group pause-on-hover">
         <div className="max-w-7xl mx-auto px-4 mb-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-ping" />
+            <span className="w-2.5 h-2.5 rounded-full bg-cyan-400" />
             <span className="text-xs font-mono text-cyan-300 uppercase tracking-widest font-semibold">
-              Mobilização & Operações Pesadas (Direcção Direita ➔)
+              Mobilização & Operações Pesadas
             </span>
           </div>
           <div className="hidden sm:flex items-center gap-2">
@@ -84,30 +80,53 @@ export const PageActivitiesVideos: React.FC = () => {
           </div>
         </div>
 
-        {/* Trilho de Scroll Contínuo para a DIREITA com Gap 24px */}
+        {/* Trilho de Scroll Infinito Contínuo (Sem Espaços Vazios) */}
         <div
           ref={topScrollRef}
-          className="w-full overflow-x-auto scrollbar-none py-3"
+          className="w-full overflow-x-auto scrollbar-none py-2"
         >
-          <div className="animate-marquee-right flex gap-6 px-4">
-            {topLoop.map((video, idx) => (
-              <VideoActivityCard
-                key={`top-${video.id}-${idx}`}
-                video={video}
-                onSelect={() => setSelectedVideo(video)}
-              />
-            ))}
+          <div className="flex gap-6 w-max">
+            {/* Bloco 1 */}
+            <div className="animate-marquee-right flex gap-6">
+              {topRowVideos.map((video) => (
+                <VideoActivityCard
+                  key={`top-g1-${video.id}`}
+                  video={video}
+                  onSelect={() => setSelectedVideo(video)}
+                />
+              ))}
+            </div>
+            {/* Bloco 2 (Continuação contínua) */}
+            <div className="animate-marquee-right flex gap-6" aria-hidden="true">
+              {topRowVideos.map((video) => (
+                <VideoActivityCard
+                  key={`top-g2-${video.id}`}
+                  video={video}
+                  onSelect={() => setSelectedVideo(video)}
+                />
+              ))}
+            </div>
+            {/* Bloco 3 (Garantia para ecrãs ultra-wide 4K) */}
+            <div className="animate-marquee-right flex gap-6" aria-hidden="true">
+              {topRowVideos.map((video) => (
+                <VideoActivityCard
+                  key={`top-g3-${video.id}`}
+                  video={video}
+                  onSelect={() => setSelectedVideo(video)}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* ── LINHA 2 (INFERIOR): VÍDEOS A RODAR EM DIRECÇÃO À ESQUERDA ⬅️ ── */}
+      {/* ── LINHA 2 (INFERIOR): TUBAGENS, FITTINGS & LOGÍSTICA INDUSTRIAL ── */}
       <div className="relative w-full group pause-on-hover">
         <div className="max-w-7xl mx-auto px-4 mb-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#1868B8] animate-ping" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#1868B8]" />
             <span className="text-xs font-mono text-cyan-300 uppercase tracking-widest font-semibold">
-              Pipes, Fittings & Logística Industrial (Direcção Esquerda ⬅️)
+              Pipes, Fittings & Logística Industrial
             </span>
           </div>
           <div className="hidden sm:flex items-center gap-2">
@@ -130,24 +149,47 @@ export const PageActivitiesVideos: React.FC = () => {
           </div>
         </div>
 
-        {/* Trilho de Scroll Contínuo para a ESQUERDA com Gap 24px */}
+        {/* Trilho de Scroll Infinito Contínuo (Sem Espaços Vazios) */}
         <div
           ref={bottomScrollRef}
-          className="w-full overflow-x-auto scrollbar-none py-3"
+          className="w-full overflow-x-auto scrollbar-none py-2"
         >
-          <div className="animate-marquee-left flex gap-6 px-4">
-            {bottomLoop.map((video, idx) => (
-              <VideoActivityCard
-                key={`bottom-${video.id}-${idx}`}
-                video={video}
-                onSelect={() => setSelectedVideo(video)}
-              />
-            ))}
+          <div className="flex gap-6 w-max">
+            {/* Bloco 1 */}
+            <div className="animate-marquee-left flex gap-6">
+              {bottomRowVideos.map((video) => (
+                <VideoActivityCard
+                  key={`bot-g1-${video.id}`}
+                  video={video}
+                  onSelect={() => setSelectedVideo(video)}
+                />
+              ))}
+            </div>
+            {/* Bloco 2 (Continuação contínua) */}
+            <div className="animate-marquee-left flex gap-6" aria-hidden="true">
+              {bottomRowVideos.map((video) => (
+                <VideoActivityCard
+                  key={`bot-g2-${video.id}`}
+                  video={video}
+                  onSelect={() => setSelectedVideo(video)}
+                />
+              ))}
+            </div>
+            {/* Bloco 3 (Garantia para ecrãs ultra-wide 4K) */}
+            <div className="animate-marquee-left flex gap-6" aria-hidden="true">
+              {bottomRowVideos.map((video) => (
+                <VideoActivityCard
+                  key={`bot-g3-${video.id}`}
+                  video={video}
+                  onSelect={() => setSelectedVideo(video)}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Modal / Lightbox Interativo com AnimatePresence no Pai */}
+      {/* Modal / Lightbox Interativo com AnimatePresence */}
       <AnimatePresence>
         {selectedVideo && (
           <ActivitiesVideoModal

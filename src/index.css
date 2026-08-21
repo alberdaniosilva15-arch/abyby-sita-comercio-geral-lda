@@ -662,36 +662,40 @@ textarea:focus-visible {
   }
 }
 
-/* Activities Dual-direction Horizontal Marquee with Gap Compensation */
+/* Activities Dual-direction Horizontal Marquee (Full Width, Zero Blank Space) */
 @keyframes marqueeScrollLeft {
-  0% {
+  from {
     transform: translate3d(0, 0, 0);
   }
-  100% {
-    transform: translate3d(calc(-50% - 12px), 0, 0);
+  to {
+    transform: translate3d(-100%, 0, 0);
   }
 }
 
 @keyframes marqueeScrollRight {
-  0% {
-    transform: translate3d(calc(-50% - 12px), 0, 0);
+  from {
+    transform: translate3d(-100%, 0, 0);
   }
-  100% {
+  to {
     transform: translate3d(0, 0, 0);
   }
 }
 
 .animate-marquee-left {
   display: flex;
-  width: max-content;
-  animation: marqueeScrollLeft 45s linear infinite;
+  gap: 1.5rem;
+  flex-shrink: 0;
+  min-width: 100%;
+  animation: marqueeScrollLeft 35s linear infinite;
   will-change: transform;
 }
 
 .animate-marquee-right {
   display: flex;
-  width: max-content;
-  animation: marqueeScrollRight 45s linear infinite;
+  gap: 1.5rem;
+  flex-shrink: 0;
+  min-width: 100%;
+  animation: marqueeScrollRight 35s linear infinite;
   will-change: transform;
 }
 

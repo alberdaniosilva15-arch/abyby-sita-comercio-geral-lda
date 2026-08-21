@@ -4,85 +4,57 @@ export interface ActivityVideo {
   category: string;
   description: string; // Legenda/descrição técnica ("DIZER")
   videoUrl: string;
-  thumbnailUrl?: string;
   tag: string;
-  row: 'top' | 'bottom'; // 'top' rola para a direita, 'bottom' para a esquerda
+  row: 'top' | 'bottom';
 }
 
 export const ACTIVITIES_VIDEOS: ActivityVideo[] = [
-  // ── LINHA SUPERIOR (Rola para a Direita ➡️) ──────────────────────────────────
+  // ── LINHA SUPERIOR (Mobilização & Frota Pesada) ──────────────────────────
   {
-    id: 'act-1',
+    id: 'act-porta-maquinas',
     title: 'Porta-Máquinas e Movimentação Pesada',
     category: 'Logística & Frota Pesada',
-    tag: 'LOGÍSTICA PESADA',
-    description: 'Operações de transporte especializado com porta-máquinas de alta tonelagem para mobilização segura de equipamentos industriais pesados em todo o território nacional.',
+    tag: 'FROTA & CARGA PESADA',
+    description: 'Operações de mobilização especializada com porta-máquinas de alta tonelagem para transporte seguro de equipamentos industriais pesados.',
     videoUrl: 'https://res.cloudinary.com/vgxylpmd/video/upload/v1787317148/PORTA_containers_sem_som_wp6dw5.mp4',
     row: 'top',
   },
   {
-    id: 'act-2',
-    title: 'Compra de Sucatas Industriais em Grandes Quantidades',
+    id: 'act-sucatas',
+    title: 'Compra de Sucatas em Grandes Quantidades',
     category: 'Metalomecânica & Reciclagem',
-    tag: 'SUCATAS & FERROSOS',
-    description: 'Recolha, triagem técnica e aquisição em grande escala de sucatas metálicas e estruturas desativadas, cumprindo rigorosos padrões ambientais e de conformidade.',
+    tag: 'RECICLAGEM & SUCATAS',
+    description: 'Triagem, recolha técnica e aquisição industrial em grande escala de sucatas ferrosas e estruturas metálicas desativadas.',
     videoUrl: 'https://res.cloudinary.com/vgxylpmd/video/upload/v1787318488/compras_de_sucatas_bwfqrv.mp4',
     row: 'top',
   },
   {
-    id: 'act-3',
-    title: 'Gestão e Fornecimento de Contentores Ferrosos',
-    category: 'Saneamento & Material Ferroso',
-    tag: 'CONTENTORES & FERROS',
-    description: 'Fornecimento e logística de contentores metálicos industriais para recolha e gestão de resíduos em estaleiros de obras públicas e instalações fabris.',
+    id: 'act-pipes-escala',
+    title: 'Compra e Venda de Pipes em Grande Escala',
+    category: 'Oil & Gas / Tubagens',
+    tag: 'PIPES & FITTINGS',
+    description: 'Comercialização a granel de tubagens de aço carbono e ligas especiais para infraestruturas petrolíferas e industriais.',
     videoUrl: 'https://res.cloudinary.com/vgxylpmd/video/upload/v1787319592/compras_de_pipes_em_grande_escala_mfqrs7.mp4',
-    row: 'top',
-  },
-  {
-    id: 'act-4',
-    title: 'Mobilização de Frota e Carga Marítima',
-    category: 'Apoio Marítimo & Portuário',
-    tag: 'APOIO MARÍTIMO',
-    description: 'Manobras de atracação e transporte marítimo costeiro de mercadorias estratégicas com acompanhamento técnico contínuo.',
-    videoUrl: 'https://res.cloudinary.com/vgxylpmd/video/upload/v1787317148/PORTA_containers_sem_som_wp6dw5.mp4',
     row: 'top',
   },
 
-  // ── LINHA INFERIOR (Rola para a Esquerda ⬅️) ──────────────────────────────────
+  // ── LINHA INFERIOR (Distribuição, Tubagens & Logística) ────────────────────
   {
-    id: 'act-5',
-    title: 'Compra e Venda de Pipes em Grande Escala',
-    category: 'Oil & Gas / Pipes & Fittings',
-    tag: 'TUBAGENS DE ALTA PRESSÃO',
-    description: 'Comercialização, inspeção dimensional e fornecimento a granel de tubagens de aço carbono e ligas especiais para infraestruturas de petróleo e gás.',
-    videoUrl: 'https://res.cloudinary.com/vgxylpmd/video/upload/v1787319592/compras_de_pipes_em_grande_escala_mfqrs7.mp4',
-    row: 'bottom',
-  },
-  {
-    id: 'act-6',
-    title: 'Transporte e Distribuição Estrutural de Pipes',
-    category: 'Distribuição Industrial',
-    tag: 'TRANSPORTE DE TUBOS',
-    description: 'Carregamento, amarração certificada e distribuição rodoviária de tubos de grande diâmetro com garantia de integridade geométrica.',
+    id: 'act-transporte-pipes',
+    title: 'Transporte e Distribuição de Pipes',
+    category: 'Transporte Industrial',
+    tag: 'LOGÍSTICA DE TUBOS',
+    description: 'Carregamento e distribuição rodoviária de tubos com amarração técnica certificada para garantir total estabilidade e integridade.',
     videoUrl: 'https://res.cloudinary.com/vgxylpmd/video/upload/v1787319759/vendas_de_pipes_sem_som_evxkbw.mp4',
     row: 'bottom',
   },
   {
-    id: 'act-7',
-    title: 'Logística Integrada e Venda de Tubagens de Aço',
-    category: 'Suprimentos Industriais',
-    tag: 'TUBAGENS & FITTINGS',
-    description: 'Armazenamento estratégico e entrega rápida de pipes, flanges e conexões para projetos de saneamento, mineração e refinarias em Angola.',
+    id: 'act-vendas-pipes',
+    title: 'Transporte e Vendas de Tubagens Estruturais',
+    category: 'Suprimentos Estruturais',
+    tag: 'TUBAGENS INDUSTRIAIS',
+    description: 'Logística integrada e fornecimento de tubagens estruturais de alta resistência para projetos de engenharia e construção.',
     videoUrl: 'https://res.cloudinary.com/vgxylpmd/video/upload/v1787320146/transporte_e_vendas_de_pipes_kmfudo.mp4',
-    row: 'bottom',
-  },
-  {
-    id: 'act-8',
-    title: 'Operações de Içamento e Elevação Pesada',
-    category: 'Equipamentos Pesados',
-    tag: 'ELEVAÇÃO & GRUAS',
-    description: 'Movimentação segura de cargas sobredimensionadas com recurso a gruas telescópicas e equipas de rigger qualificadas.',
-    videoUrl: 'https://res.cloudinary.com/vgxylpmd/video/upload/v1787319759/vendas_de_pipes_sem_som_evxkbw.mp4',
     row: 'bottom',
   },
 ];
